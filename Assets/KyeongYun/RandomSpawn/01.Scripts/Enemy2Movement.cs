@@ -5,8 +5,9 @@ public class Enemy2Movement : MonoBehaviour
 {
     public IObjectPool<GameObject> Pool { get; set; }
 
-    public GameObject targetObject; // 프리팹 2의 목표 오브젝트
     public float movementSpeed = 5f; // 이동 속도
+    [HideInInspector]
+    public GameObject targetObject; // 프리팹 2의 목표 오브젝트
 
     void Update()
     {

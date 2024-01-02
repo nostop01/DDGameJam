@@ -5,7 +5,7 @@ using UnityEngine;
 public class RigidbodyMove : MonoBehaviour
 {
     Rigidbody2D rb2D;
-    float speed = 5f;
+    public float speed = 5f;
     float smoothTime = 0.3f;
 
     private Vector2 currentVelocity = Vector2.zero;

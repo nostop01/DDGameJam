@@ -2,12 +2,6 @@ using UnityEngine;
 
 public class Point : MonoBehaviour
 {
-    private PlayerAttack playerAttack;
-
-    private void Awake()
-    {
-        playerAttack = PlayerAttack.Instance;
-    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -15,8 +9,10 @@ public class Point : MonoBehaviour
 
         if (collision.CompareTag("Player"))
         {
-            playerAttack.attackPower++;
             Destroy(gameObject);
+            PlayerMovement.DefaultSpeed += 0.5f;
+            PlayerMovement.MaxAcceleration += 0.5f;
+            //Pool.Release(this.gameobject);
         }
     }
 }

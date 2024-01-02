@@ -469,16 +469,15 @@ MonoBehaviour:
   prefab1: {fileID: 6234199488755185252, guid: feae527a7967aab499db15adf0dbd8e2, type: 3}
   prefab2: {fileID: 6234199488755185252, guid: 2152ceed71462b549aeddff495efac8a, type: 3}
   point: {fileID: 4131515661158061480, guid: 80cbaba219230c342973337abc870c35, type: 3}
+  spawnAreaCenter: {x: 0, y: 0}
+  spawnAreaSize: {x: 20, y: 10}
+  spawnPointAreaSize: {x: 17, y: 9}
+  exclusionAreaCenter: {x: 0, y: 0}
+  exclusionAreaSize: {x: 15.08, y: 8}
   spawnInterval1: 2
   spawnInterval2: 3
   pointInterval: 3
   spawnCenter: {fileID: 1051930778}
-  spawnRadius1: 5
-  spawnRadius2: 7
-  spawnRadius3: 7
-  exclusionRadius1: 2
-  exclusionRadius2: 3
-  exclusionRadius3: 3
   targetObject: {fileID: 1051930775}
 --- !u!4 &1373615164
 Transform:

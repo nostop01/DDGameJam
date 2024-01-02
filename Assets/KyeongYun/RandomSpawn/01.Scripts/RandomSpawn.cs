@@ -25,12 +25,10 @@ public class DualPrefabSpawn : MonoBehaviour
         {
             // 두 프리팹에 대해 각각 생성
             var obj1 = ObjectPoolManager.instance.GetGo("Enemy1");
-            obj1.transform.position = GetRandomSpawnPosition(spawnRadius1, exclusionRadius1);
             obj1.GetComponent<Enemy1Movement>().targetObject = targetObject;
             
 
             var obj2 = ObjectPoolManager.instance.GetGo("Enemy2");
-            obj2.transform.position = GetRandomSpawnPosition(exclusionRadius2, exclusionRadius2);
             obj2.GetComponent<Enemy2Movement>().targetObject = targetObject;
 
             yield return new WaitForSeconds(spawnInterval1);  // 첫 번째 프리팹 생성 간격
@@ -38,7 +36,7 @@ public class DualPrefabSpawn : MonoBehaviour
         }
     }
 
-    private Vector3 GetRandomSpawnPosition(float spawnRadius, float exclusionRadius)
+    public Vector3 GetRandomSpawnPosition(float spawnRadius, float exclusionRadius)
     {
         // 원 내부에서 랜덤한 위치를 생성
         Vector3 randomPosition = Vector3.zero;

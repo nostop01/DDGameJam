@@ -48,7 +48,7 @@ public class RandomSpawn : MonoBehaviour
         }
     }
 
-    private Vector3 GetRandomSpawnPosition(float spawnRadius, float exclusionRadius)
+    public Vector3 GetRandomSpawnPosition(float spawnRadius, float exclusionRadius)
     {
         Vector3 randomPosition = Vector3.zero;
         bool isWithinExclusion = true;

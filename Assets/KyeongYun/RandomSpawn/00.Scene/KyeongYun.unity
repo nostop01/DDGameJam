@@ -474,7 +474,7 @@ MonoBehaviour:
     count: 3
   - ObjectName: Enemy2
     Prefab: {fileID: 6234199488755185252, guid: 2152ceed71462b549aeddff495efac8a, type: 3}
-    count: 4
+    count: 3
 --- !u!4 &1616019903
 Transform:
   m_ObjectHideFlags: 0

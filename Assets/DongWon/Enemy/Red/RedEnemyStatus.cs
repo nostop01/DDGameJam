@@ -4,10 +4,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class RedEnemyStatus : MonoBehaviour
+public class RedEnemyStatus : PoolAble
 {
-    public IObjectPool<GameObject> Pool { get; set; }
-
     public float RedEnemyHealth = 30f;
     public static float RedEnemyAttack = 7f;
 
@@ -17,6 +15,11 @@ public class RedEnemyStatus : MonoBehaviour
     void Start()
     {
 
+    }
+
+    private void OnEnable()
+    {
+        RedEnemyHealth = 30f;
     }
 
     // Update is called once per frame
@@ -29,8 +32,8 @@ public class RedEnemyStatus : MonoBehaviour
     {
         if (RedEnemyHealth <= 0)
         {
-            //Pool.Release(this.gameObject);
-            Destroy(this.gameObject);
+            //ReleaseObject();
+            Destroy(gameObject);
         }
     }
 
@@ -43,14 +46,12 @@ public class RedEnemyStatus : MonoBehaviour
     {
         EnergyStatus.EnergyHealth = EnergyStatus.EnergyHealth - RedEnemyAttack;
 
-        Destroy(gameObject);
-
-        //Pool.Release(this.gameObject);
+        ReleaseObject();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.name == "Energy")
+        if(collision.gameObject.CompareTag("Energy"))
         {
             SuccessAttack();
         }

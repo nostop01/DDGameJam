@@ -6,8 +6,6 @@ public class CommonEnemyNuckBack : MonoBehaviour
 {
     public float PlayerSpeed = 0;
 
-    public Transform Target;
-
     Rigidbody2D rigid;
 
     private void Start()
@@ -20,7 +18,7 @@ public class CommonEnemyNuckBack : MonoBehaviour
 
     }
 
-    private void NuckBack()
+    public void NuckBack(Transform Target)
     {
         PlayerSpeed = PlayerMovement.MoveSpeed;
 
@@ -34,8 +32,7 @@ public class CommonEnemyNuckBack : MonoBehaviour
     {
         if(collision.gameObject.name == "Player")
         {
-            NuckBack();
+            NuckBack(collision.transform);
         }
     }
-
 }

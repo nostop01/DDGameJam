@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class CommonEnemyStatus : MonoBehaviour
+public class CommonEnemyStatus : PoolAble
 {
-    public IObjectPool<GameObject> Pool { get; set; }
-
     public float CommonEnemyHealth = 40f;
     public static float CommonEnemyAttack = 5f;
 
@@ -14,6 +12,11 @@ public class CommonEnemyStatus : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
+    {
+        
+    }
+
+    private void OnEnable()
     {
         CommonEnemyHealth = 40f;
     }
@@ -28,8 +31,8 @@ public class CommonEnemyStatus : MonoBehaviour
     {
         if(CommonEnemyHealth <= 0)
         {
-            //Pool.Release(this.gameObject);
-            Destroy(this.gameObject);
+            //ReleaseObject();
+            Destroy(gameObject);
         }
     }
 
@@ -40,16 +43,14 @@ public class CommonEnemyStatus : MonoBehaviour
 
     private void SuccessAttack()
     {
+        ReleaseObject();
+
         EnergyStatus.EnergyHealth = EnergyStatus.EnergyHealth - CommonEnemyAttack;
-
-        Destroy(gameObject);
-
-        //Pool.Release(this.gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Energy")
+        if (collision.gameObject.CompareTag("Energy"))
         {
             SuccessAttack();
         }

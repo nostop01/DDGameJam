@@ -4,7 +4,12 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Enemy
+  - CommonEnemy
+  - RedEnemy
+  - BlueEnemy
+  - Energy
+  - Chark
+  - Point
   layers:
   - Default
   - TransparentFX
@@ -13,9 +18,9 @@ TagManager:
   - Water
   - UI
   - 
-  - 
-  - 
-  - 
+  - CommonEnemy
+  - RedEnemy
+  - BlueEnemy
   - 
   - 
   - 

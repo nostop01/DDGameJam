@@ -17,10 +17,7 @@ public class CommonEnemyNuckBack : MonoBehaviour
 
     private void Update()
     {
-        if(CommonEnemyStatus.HitPlayer)
-        {
-            NuckBack();
-        }
+
     }
 
     private void NuckBack()
@@ -31,7 +28,14 @@ public class CommonEnemyNuckBack : MonoBehaviour
         Vector2 bounceVector = PlayerSpeed / 2 * direction;
 
         rigid.AddForce(-bounceVector, ForceMode2D.Impulse);
+    }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.name == "Player")
+        {
+            NuckBack();
+        }
     }
 
 }

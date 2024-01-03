@@ -12,14 +12,17 @@ public class PlayerMovement : MonoBehaviour
 
     public bool Acceling = false; //가속중인가?
 
-
+    Camera Cam;
     Rigidbody2D rigid2D;
     Vector2 lastInputDirection;
+    Vector3 CameraOriginalPos;
 
     private void Start()
     {
         rigid2D = GetComponent<Rigidbody2D>();
         DefaultSpeed = 50f;
+        Cam = Camera.main;
+        CameraOriginalPos = Cam.transform.position;
     }
 
     private void Update()
@@ -89,6 +92,21 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    public IEnumerator CamShake(float duration, float magnitude)
+    {
+        float timer = 0;
+
+        while (timer <= duration)
+        {
+            Cam.transform.localPosition = Random.insideUnitSphere * magnitude + CameraOriginalPos;
+
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        Cam.transform.localPosition = CameraOriginalPos;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.name == "Point")
@@ -98,7 +116,9 @@ public class PlayerMovement : MonoBehaviour
 
         if(collision.gameObject.name == "CommonEnemy")
         {
-            CommonEnemyStatus.CommonEnemyHealth -= Acceleration;
+            CommonEnemyStatus CommonEnemyStatus = collision.gameObject.GetComponent<CommonEnemyStatus>();
+
+            CommonEnemyStatus.TakeDamage(Acceleration);
 
             if(CommonEnemyStatus.CommonEnemyHealth >= Acceleration)
             {
@@ -109,12 +129,15 @@ public class PlayerMovement : MonoBehaviour
             {
                 Acceleration = CommonEnemyStatus.CommonEnemyHealth - Acceleration;
             }
-            
+
+            StartCoroutine(CamShake(0.25f, 1.0f));
         }
 
         if (collision.gameObject.name == "RedEnemy")
         {
-            RedEnemyStatus.RedEnemyHealth -= Acceleration;
+            RedEnemyStatus RedEnemyStatus = collision.gameObject.GetComponent<RedEnemyStatus>();
+
+            RedEnemyStatus.TakeDamage(Acceleration);
 
             if (RedEnemyStatus.RedEnemyHealth >= Acceleration)
             {
@@ -126,11 +149,15 @@ public class PlayerMovement : MonoBehaviour
                 Acceleration = RedEnemyStatus.RedEnemyHealth - Acceleration;
             }
 
+            StartCoroutine(CamShake(0.25f, 1.0f));
+
         }
 
         if (collision.gameObject.name == "BlueEnemy")
         {
-            BlueEnemyStatus.BlueEnemyHealth -= Acceleration;
+            BlueEnemyStatus BlueEnemyStatus = collision.gameObject.GetComponent<BlueEnemyStatus>();
+
+            BlueEnemyStatus.TakeDamage(Acceleration);
 
             if (BlueEnemyStatus.BlueEnemyHealth >= Acceleration)
             {
@@ -141,6 +168,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 Acceleration = BlueEnemyStatus.BlueEnemyHealth - Acceleration;
             }
+
+            StartCoroutine(CamShake(0.25f, 1.0f));
 
         }
     }

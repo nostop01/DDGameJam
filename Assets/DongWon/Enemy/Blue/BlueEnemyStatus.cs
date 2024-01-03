@@ -7,10 +7,8 @@ public class BlueEnemyStatus : MonoBehaviour
 {
     public IObjectPool<GameObject> Pool { get; set; }
 
-    public static float BlueEnemyHealth = 50f;
+    public float BlueEnemyHealth = 50f;
     public static float BlueEnemyAttack = 0f;
-
-    public static bool HitPlayer = false;
 
     public float Timer = 0;
 
@@ -23,17 +21,6 @@ public class BlueEnemyStatus : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (HitPlayer)
-        {
-            Timer += Time.deltaTime;
-
-            if (Timer >= 0.05f)
-            {
-                HitPlayer = false;
-                Timer = 0f;
-            }
-        }
-
         HealthZero();
     }
 
@@ -42,15 +29,17 @@ public class BlueEnemyStatus : MonoBehaviour
         if (BlueEnemyHealth <= 0)
         {
             //Pool.Release(this.gameObject);
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        BlueEnemyHealth -= damage;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Player")
-        {
-            HitPlayer = true;
-        }
+
     }
 }

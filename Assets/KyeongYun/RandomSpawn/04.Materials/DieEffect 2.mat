@@ -67,12 +67,12 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
-    - _GlowSize: 0.1
-    - _SplitValue: 1
+    - _GlowSize: 3
+    - _SplitValue: 3.81
     - _Split_Value: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _Glow_Color: {r: 0, g: 9.269978, b: 0.06980048, a: 0}
+    - _Glow_Color: {r: 0, g: 766.9963, b: 5.7752795, a: 0}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

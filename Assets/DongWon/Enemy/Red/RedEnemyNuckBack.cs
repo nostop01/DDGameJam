@@ -17,10 +17,7 @@ public class RedEnemyNuckBack : MonoBehaviour
 
     private void Update()
     {
-        if (RedEnemyStatus.HitPlayer)
-        {
-            NuckBack();
-        }
+
     }
 
     private void NuckBack()
@@ -32,5 +29,13 @@ public class RedEnemyNuckBack : MonoBehaviour
 
         rigid.AddForce(-bounceVector, ForceMode2D.Impulse);
 
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.name == "Player")
+        {
+            NuckBack();
+        }
     }
 }

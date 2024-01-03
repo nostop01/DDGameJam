@@ -8,10 +8,8 @@ public class RedEnemyStatus : MonoBehaviour
 {
     public IObjectPool<GameObject> Pool { get; set; }
 
-    public static float RedEnemyHealth = 30f;
+    public float RedEnemyHealth = 30f;
     public static float RedEnemyAttack = 7f;
-
-    public static bool HitPlayer = false;
 
     public float Timer = 0;
 
@@ -24,17 +22,6 @@ public class RedEnemyStatus : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (HitPlayer)
-        {
-            Timer += Time.deltaTime;
-
-            if (Timer >= 0.05f)
-            {
-                HitPlayer = false;
-                Timer = 0f;
-            }
-        }
-
         HealthZero();
     }
 
@@ -43,29 +30,29 @@ public class RedEnemyStatus : MonoBehaviour
         if (RedEnemyHealth <= 0)
         {
             //Pool.Release(this.gameObject);
-            Destroy(gameObject);
+            Destroy(this.gameObject);
         }
+    }
+
+    public void TakeDamage(float damage)
+    {
+        RedEnemyHealth -= damage;
     }
 
     private void SuccessAttack()
     {
-        
+        EnergyStatus.EnergyHealth = EnergyStatus.EnergyHealth - RedEnemyAttack;
+
+        Destroy(gameObject);
+
+        //Pool.Release(this.gameObject);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Player")
-        {
-            HitPlayer = true;
-        }
-
         if(collision.gameObject.name == "Energy")
         {
-            EnergyStatus.EnergyHealth = EnergyStatus.EnergyHealth - RedEnemyAttack;
-
-            Destroy(gameObject);
-
-            //Pool.Release(this.gameObject);
+            SuccessAttack();
         }
     }
 }

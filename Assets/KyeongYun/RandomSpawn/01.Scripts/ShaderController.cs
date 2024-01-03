@@ -6,7 +6,7 @@ public class ShaderController : MonoBehaviour
     private Material originalMaterial; // 오리지널 Material 저장
     private Material currentMaterial; // 현재 사용 중인 Material
 
-    public float decreaseSpeed = 0.1f; // 감소 속도 조절 변수
+    public float decreaseAmount = 0.1f; // 감소 속도 조절 변수
 
     void Start()
     {
@@ -19,7 +19,7 @@ public class ShaderController : MonoBehaviour
     public void ShaderOn()
     {
         float currentSplitValue = currentMaterial.GetFloat("_SplitValue");
-        currentSplitValue -= decreaseSpeed * Time.deltaTime;
+        currentSplitValue -= decreaseAmount;
 
         currentMaterial.SetFloat("_SplitValue", currentSplitValue);
 

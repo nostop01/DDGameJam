@@ -6,7 +6,6 @@ public class RedEnemyNuckBack : MonoBehaviour
 {
     public float PlayerSpeed = 0;
 
-    public Transform Target;
 
     Rigidbody2D rigid;
 
@@ -20,7 +19,7 @@ public class RedEnemyNuckBack : MonoBehaviour
 
     }
 
-    private void NuckBack()
+    public void NuckBack(Transform Target)
     {
         PlayerSpeed = PlayerMovement.MoveSpeed;
 
@@ -35,7 +34,7 @@ public class RedEnemyNuckBack : MonoBehaviour
     {
         if (collision.gameObject.name == "Player")
         {
-            NuckBack();
+            NuckBack(collision.transform);
         }
     }
 }

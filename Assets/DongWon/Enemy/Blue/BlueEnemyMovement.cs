@@ -7,7 +7,7 @@ public class BlueEnemyMovement : MonoBehaviour
     public float MoveSpeed = 30f;
     public float Timer = 0;
 
-    public Transform Target;
+    public GameObject Target;
 
     public bool HitPlayer = false;
 
@@ -37,7 +37,7 @@ public class BlueEnemyMovement : MonoBehaviour
 
         if (!HitPlayer)
         {
-            Vector3 direction = (Target.position - transform.position).normalized;
+            Vector3 direction = (Target.transform.position - transform.position).normalized;
 
             transform.Translate(direction * MoveSpeed * Time.deltaTime);
         }

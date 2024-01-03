@@ -4,7 +4,6 @@ public class EnemyHealth : MonoBehaviour
 {
     public int maxHealth = 100;  // 적의 최대 체력
     private float currentHealth;    // 현재 체력
-
     void Start()
     {
         currentHealth = maxHealth;
@@ -24,6 +23,16 @@ public class EnemyHealth : MonoBehaviour
     void Die()
     {
         // 적이 죽었을 때의 동작을 여기에 추가
-        Destroy(gameObject);
+        //Destroy(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            ShaderController shaderController = collision.gameObject.GetComponent<ShaderController>();
+
+            shaderController.ShaderOn();
+        }
     }
 }

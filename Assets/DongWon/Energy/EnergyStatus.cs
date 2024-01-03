@@ -9,12 +9,15 @@ public class EnergyStatus : MonoBehaviour
 
     private int Count;
 
+    Score score;
+
     Camera Cam;
     Vector3 CameraOriginalPos;
 
     // Start is called before the first frame update
     void Start()
     {
+        score.DuringGame = true;
         EnergyHealth = 100f;
         Count = 0;
         Cam = Camera.main;
@@ -23,7 +26,10 @@ public class EnergyStatus : MonoBehaviour
 
     private void Update()
     {
-        
+        if(EnergyHealth <= 0)
+        {
+            HealthZero();
+        }
     }
 
     private void CountIncrease()
@@ -35,6 +41,12 @@ public class EnergyStatus : MonoBehaviour
 
         PlayerMovement.DefaultSpeed += Count * 0.5f;
         PlayerMovement.MaxAcceleration += Count * 0.5f;
+    }
+
+    public void HealthZero()
+    {
+        Destroy(gameObject);
+        score.DuringGame = false;
     }
 
     public IEnumerator CamShake(float duration, float magnitude)
@@ -54,18 +66,18 @@ public class EnergyStatus : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "CommonEnemy")
+        if (collision.gameObject.CompareTag("CommonEnemy"))
         {
             GetDamage = CommonEnemyStatus.CommonEnemyAttack;
             CountIncrease();
-            StartCoroutine(CamShake(0.5f, 1.5f));
+            StartCoroutine(CamShake(0.5f, 2.0f));
         }
 
-        if (collision.gameObject.name == "RedEnemy")
+        if (collision.gameObject.CompareTag("RedEnemy"))
         {
             GetDamage = RedEnemyStatus.RedEnemyAttack;
             CountIncrease();
-            StartCoroutine(CamShake(0.5f, 2.0f));
+            StartCoroutine(CamShake(0.5f, 2.5f));
         }
     }
 }

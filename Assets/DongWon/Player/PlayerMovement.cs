@@ -57,14 +57,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if(!Acceling)
         {
-            float horizontalInput = Input.GetAxisRaw("Horizontal");
-            float verticalInput = Input.GetAxisRaw("Vertical");
+            Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            mousePosition.z = 0f; // 카메라와 플레이어는 같은 2D 평면에 있으므로 Z 값은 0으로 설정합니다.
 
-            if (horizontalInput != 0 || verticalInput != 0)
-            {
-                // 사용자가 입력한 경우
-                lastInputDirection = new Vector2(horizontalInput, verticalInput).normalized;
-            }
+            // 플레이어의 현재 위치에서 마우스 위치로 향하는 방향 벡터를 계산합니다.
+            Vector2 moveDirection = (mousePosition - transform.position).normalized;
+
+            // 사용자가 입력한 경우
+            lastInputDirection = new Vector2(moveDirection.x, moveDirection.y);
 
             // 플레이어가 자동으로 이동하도록 Rigidbody2D의 velocity를 설정
             rigid2D.velocity = lastInputDirection * MoveSpeed;
@@ -78,6 +78,7 @@ public class PlayerMovement : MonoBehaviour
         {
             Acceling = true;
             Acceleration *= 5;
+            StartCoroutine(CamShake(0.2f, 0.5f));
         }
 
         rigid2D.velocity = lastInputDirection * MoveSpeed;
@@ -109,12 +110,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.name == "Point")
+        if(collision.gameObject.CompareTag("Point"))
         {
             DefaultSpeed += 0.5f;
         }
 
-        if(collision.gameObject.name == "CommonEnemy")
+        if(collision.gameObject.CompareTag("CommonEnemy"))
         {
             CommonEnemyStatus CommonEnemyStatus = collision.gameObject.GetComponent<CommonEnemyStatus>();
 
@@ -130,10 +131,10 @@ public class PlayerMovement : MonoBehaviour
                 Acceleration = CommonEnemyStatus.CommonEnemyHealth - Acceleration;
             }
 
-            StartCoroutine(CamShake(0.25f, 1.0f));
+            StartCoroutine(CamShake(0.5f, 1.25f));
         }
 
-        if (collision.gameObject.name == "RedEnemy")
+        if (collision.gameObject.CompareTag("RedEnemy"))
         {
             RedEnemyStatus RedEnemyStatus = collision.gameObject.GetComponent<RedEnemyStatus>();
 
@@ -149,11 +150,11 @@ public class PlayerMovement : MonoBehaviour
                 Acceleration = RedEnemyStatus.RedEnemyHealth - Acceleration;
             }
 
-            StartCoroutine(CamShake(0.25f, 1.0f));
+            StartCoroutine(CamShake(0.5f, 1.5f));
 
         }
 
-        if (collision.gameObject.name == "BlueEnemy")
+        if (collision.gameObject.CompareTag("BlueEnemy"))
         {
             BlueEnemyStatus BlueEnemyStatus = collision.gameObject.GetComponent<BlueEnemyStatus>();
 
@@ -169,7 +170,7 @@ public class PlayerMovement : MonoBehaviour
                 Acceleration = BlueEnemyStatus.BlueEnemyHealth - Acceleration;
             }
 
-            StartCoroutine(CamShake(0.25f, 1.0f));
+            StartCoroutine(CamShake(0.5f, 1.25f));
 
         }
     }

@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 
-public class BlueEnemyStatus : MonoBehaviour
+public class BlueEnemyStatus : PoolAble
 {
-    public IObjectPool<GameObject> Pool { get; set; }
-
     public float BlueEnemyHealth = 50f;
     public static float BlueEnemyAttack = 0f;
 
@@ -16,6 +14,11 @@ public class BlueEnemyStatus : MonoBehaviour
     void Start()
     {
 
+    }
+
+    private void OnEnable()
+    {
+        BlueEnemyHealth = 50f;
     }
 
     // Update is called once per frame
@@ -28,8 +31,8 @@ public class BlueEnemyStatus : MonoBehaviour
     {
         if (BlueEnemyHealth <= 0)
         {
-            //Pool.Release(this.gameObject);
             Destroy(this.gameObject);
+            //ReleaseObject();
         }
     }
 

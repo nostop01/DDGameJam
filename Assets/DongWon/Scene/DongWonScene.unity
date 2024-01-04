@@ -574,7 +574,7 @@ MonoBehaviour:
   m_text: 'Time :'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5cd989069efe9344688c956afa5704d0, type: 2}
-  m_sharedMaterial: {fileID: 8187533945372624483, guid: 5cd989069efe9344688c956afa5704d0, type: 2}
+  m_sharedMaterial: {fileID: -4502209951783568221, guid: 5cd989069efe9344688c956afa5704d0, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

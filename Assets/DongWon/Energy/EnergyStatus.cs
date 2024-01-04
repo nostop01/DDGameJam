@@ -11,6 +11,9 @@ public class EnergyStatus : MonoBehaviour
 
     Score score;
 
+    public AudioClip clip;
+    public AudioSource audioSource;
+
     Camera Cam;
     Vector3 CameraOriginalPos;
 
@@ -67,6 +70,9 @@ public class EnergyStatus : MonoBehaviour
             GetDamage = CommonEnemyStatus.CommonEnemyAttack;
             CountIncrease();
             StartCoroutine(CamShake(0.5f, 2.0f));
+
+            audioSource.clip = clip;
+            audioSource.Play();
         }
 
         if (collision.gameObject.CompareTag("RedEnemy"))
@@ -74,6 +80,9 @@ public class EnergyStatus : MonoBehaviour
             GetDamage = RedEnemyStatus.RedEnemyAttack;
             CountIncrease();
             StartCoroutine(CamShake(0.5f, 2.5f));
+
+            audioSource.clip = clip;
+            audioSource.Play();
         }
     }
 }

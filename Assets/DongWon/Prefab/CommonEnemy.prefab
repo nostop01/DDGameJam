@@ -190,6 +190,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CommonEnemyHealth: 40
   Timer: 0
+  audioSource: {fileID: 6063777641561872050, guid: 2619fa4d0ea6bd247a4b148f35fe79a2, type: 3}
+  clip: {fileID: 8300000, guid: ac3ac2aadea6fc34689803c4da001d98, type: 3}
 --- !u!114 &1013491411668874108
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -30,6 +30,7 @@ public class PlayerMovement : MonoBehaviour
         SetMoveSpeed();
         PlayerMove();
         InstantaneousAccel();
+        ClampPlayerPosition();
 
         if (Acceling)
         {
@@ -48,7 +49,7 @@ public class PlayerMovement : MonoBehaviour
 
         else if(Acceleration <= MaxAcceleration && !Acceling)
         {
-            Acceleration += 0.05f;
+            Acceleration += 0.025f;
         }
 
     }
@@ -78,7 +79,6 @@ public class PlayerMovement : MonoBehaviour
         {
             Acceling = true;
             Acceleration *= 5;
-            StartCoroutine(CamShake(0.2f, 0.5f));
         }
 
         rigid2D.velocity = lastInputDirection * MoveSpeed;
@@ -91,6 +91,18 @@ public class PlayerMovement : MonoBehaviour
             Acceleration = MaxAcceleration;
             Acceleration -= MaxAcceleration / 3;
         }
+    }
+
+    void ClampPlayerPosition()
+    {
+        Camera mainCamera = Camera.main;
+        Vector3 minBounds = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, 0));
+        Vector3 maxBounds = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, 0));
+
+        float clampedX = Mathf.Clamp(transform.position.x, minBounds.x, maxBounds.x);
+        float clampedY = Mathf.Clamp(transform.position.y, minBounds.y, maxBounds.y);
+
+        transform.position = new Vector3(clampedX, clampedY, transform.position.z);
     }
 
     public IEnumerator CamShake(float duration, float magnitude)

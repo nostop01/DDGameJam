@@ -17,7 +17,6 @@ public class EnergyStatus : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        score.DuringGame = true;
         EnergyHealth = 100f;
         Count = 0;
         Cam = Camera.main;
@@ -34,19 +33,16 @@ public class EnergyStatus : MonoBehaviour
 
     private void CountIncrease()
     {
-        for(float i = 0; i < GetDamage; i++)
-        {
-            Count++;
-        }
+        Debug.Log("GetDamage :" + GetDamage);
+        PlayerMovement.DefaultSpeed += GetDamage * 0.5f;
+        PlayerMovement.MaxAcceleration += GetDamage * 0.5f;
 
-        PlayerMovement.DefaultSpeed += Count * 0.5f;
-        PlayerMovement.MaxAcceleration += Count * 0.5f;
+        Debug.Log("DefaultSpeed :" + PlayerMovement.DefaultSpeed);
     }
 
     public void HealthZero()
     {
         Destroy(gameObject);
-        score.DuringGame = false;
     }
 
     public IEnumerator CamShake(float duration, float magnitude)

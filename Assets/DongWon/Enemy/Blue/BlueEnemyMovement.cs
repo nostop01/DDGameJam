@@ -7,17 +7,22 @@ public class BlueEnemyMovement : MonoBehaviour
     public float MoveSpeed = 30f;
     public float Timer = 0;
 
-    public GameObject Target;
+    [SerializeField]
+    private Transform Target;
 
     public bool HitPlayer = false;
 
+    Vector3 targetPos;
+
     private void Start()
     {
-
+        Target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     private void Update()
     {
+        targetPos = Target.transform.position;
+
         ChaseTarget();
 
         Timer += Time.deltaTime;
@@ -37,7 +42,7 @@ public class BlueEnemyMovement : MonoBehaviour
 
         if (!HitPlayer)
         {
-            Vector3 direction = (Target.transform.position - transform.position).normalized;
+            Vector3 direction = (targetPos - transform.position).normalized;
 
             transform.Translate(direction * MoveSpeed * Time.deltaTime);
         }
@@ -46,7 +51,7 @@ public class BlueEnemyMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Player")
+        if (collision.gameObject.CompareTag("Player"))
         {
             HitPlayer = true;
         }

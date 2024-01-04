@@ -17,7 +17,7 @@ public class WaveSystem : MonoBehaviour
     {
         WaveTimer = 0f;
         WaveCounter = 0f;
-        CommonEnemyCount = 0;
+        CommonEnemyCount = 1;
         RedEnemyCount = 0;
         BlueEnemyCount = 0;
     }
@@ -26,7 +26,7 @@ public class WaveSystem : MonoBehaviour
     {
         WaveTimer += Time.deltaTime;
 
-        if (WaveTimer >= 10f)
+        if (WaveTimer >= 7f)
         {
             WaveTimer = 0f;
             WaveCount();
@@ -51,16 +51,12 @@ public class WaveSystem : MonoBehaviour
         else if (WaveCounter % 3 == 0)
         {
             RedEnemyCount++;
+            CommonEnemyCount++;
         }
 
         else if (WaveCounter % 5 == 0)
         {
             BlueEnemyCount++;
-        }
-
-        else
-        {
-            CommonEnemyCount++;
         }
     }
 

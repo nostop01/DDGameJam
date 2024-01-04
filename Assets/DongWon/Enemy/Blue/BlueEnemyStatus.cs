@@ -31,8 +31,7 @@ public class BlueEnemyStatus : PoolAble
     {
         if (BlueEnemyHealth <= 0)
         {
-            Destroy(this.gameObject);
-            //ReleaseObject();
+            ReleaseObject();
         }
     }
 

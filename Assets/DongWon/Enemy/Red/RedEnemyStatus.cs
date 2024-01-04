@@ -32,8 +32,7 @@ public class RedEnemyStatus : PoolAble
     {
         if (RedEnemyHealth <= 0)
         {
-            //ReleaseObject();
-            Destroy(gameObject);
+            ReleaseObject();
         }
     }
 

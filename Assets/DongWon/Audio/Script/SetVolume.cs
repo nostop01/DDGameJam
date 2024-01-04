@@ -22,20 +22,17 @@ public class SetVolume : MonoBehaviour
     {
         audioMixer.SetFloat("AllSound", Mathf.Log10(sliderValue) * 20);
         PlayerPrefs.SetFloat("AllSound", sliderValue);
-        Debug.Log(sliderValue);
     }
 
     public void SetBGMVolume(float sliderValue)
     {
         audioMixer.SetFloat("BGMSound", Mathf.Log10(sliderValue) * 20);
         PlayerPrefs.SetFloat("BGMSound", sliderValue);
-        Debug.Log(sliderValue);        
     }
 
     public void SetSFXVolume(float sliderValue)
     {
         audioMixer.SetFloat("SFXSound", Mathf.Log10(sliderValue) * 20);
         PlayerPrefs.SetFloat("SFXSound", sliderValue);
-        Debug.Log(sliderValue);
     }
 }

@@ -6,10 +6,6 @@ public class CharkParticle : MonoBehaviour
 {
     public ParticleSystem particleSystem;
 
-    public AudioSource audioSource;
-
-    public AudioClip clip;
-
     // Start is called before the first frame update
     void Start()
     {
@@ -40,10 +36,6 @@ public class CharkParticle : MonoBehaviour
             {
                 commonEnemyStatus.TakeDamage(5f);
             }
-
-            audioSource.clip = clip;
-
-            audioSource.Play();
         }
         else if (redEnemyNuckBack != null && redEnemyNuckBack.gameObject.CompareTag("RedEnemy"))
         {
@@ -54,9 +46,6 @@ public class CharkParticle : MonoBehaviour
             {
                 redEnemyStatus.TakeDamage(5f);
             }
-            audioSource.clip = clip;
-
-            audioSource.Play();
         }
         else if (blueEnemyNuckBack != null && blueEnemyNuckBack.gameObject.CompareTag("BlueEnemy"))
         {
@@ -67,9 +56,6 @@ public class CharkParticle : MonoBehaviour
             {
                 blueEnemyStatus.TakeDamage(5f);
             }
-            audioSource.clip = clip;
-
-            audioSource.Play();
         }
     }
 }

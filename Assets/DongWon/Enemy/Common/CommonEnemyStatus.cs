@@ -31,8 +31,7 @@ public class CommonEnemyStatus : PoolAble
     {
         if(CommonEnemyHealth <= 0)
         {
-            //ReleaseObject();
-            Destroy(gameObject);
+            ReleaseObject();
         }
     }
 

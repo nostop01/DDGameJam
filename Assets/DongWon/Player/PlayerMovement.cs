@@ -12,9 +12,6 @@ public class PlayerMovement : MonoBehaviour
 
     public bool Acceling = false; //가속중인가?
 
-    public AudioSource audioSource;
-    public AudioClip[] music;
-
     Camera Cam;
     Rigidbody2D rigid2D;
     Vector2 lastInputDirection;
@@ -82,9 +79,6 @@ public class PlayerMovement : MonoBehaviour
         {
             Acceling = true;
             Acceleration *= 5;
-            audioSource.clip = music[1];
-
-            audioSource.Play();
         }
 
         rigid2D.velocity = lastInputDirection * MoveSpeed;
@@ -150,10 +144,6 @@ public class PlayerMovement : MonoBehaviour
             }
 
             StartCoroutine(CamShake(0.5f, 1.25f));
-
-            audioSource.clip = music[0];
-
-            audioSource.Play();
         }
 
         if (collision.gameObject.CompareTag("RedEnemy"))
@@ -174,9 +164,6 @@ public class PlayerMovement : MonoBehaviour
 
             StartCoroutine(CamShake(0.5f, 1.5f));
 
-            audioSource.clip = music[0];
-
-            audioSource.Play();
         }
 
         if (collision.gameObject.CompareTag("BlueEnemy"))
@@ -196,10 +183,6 @@ public class PlayerMovement : MonoBehaviour
             }
 
             StartCoroutine(CamShake(0.5f, 1.25f));
-
-            audioSource.clip = music[0];
-
-            audioSource.Play();
 
         }
     }

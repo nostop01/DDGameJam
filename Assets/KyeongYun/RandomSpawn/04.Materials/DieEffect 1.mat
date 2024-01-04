@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: DieEffect 1
-  m_Shader: {fileID: -6465566751694194690, guid: 9550402e80a46264bad64e28ef68676d, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: e8dc365ff18ffbd40a8d74e92304c207, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -67,12 +67,12 @@ Material:
     m_Ints: []
     m_Floats:
     - _EnableExternalAlpha: 0
-    - _GlowSize: 0.5
-    - _SplitValue: 1.34
+    - _GlowSize: 0.1
+    - _SplitValue: 1
     - _Split_Value: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Flip: {r: 1, g: 1, b: 1, a: 1}
-    - _Glow_Color: {r: 16.726265, g: 1.7355804, b: 0, a: 1}
+    - _Glow_Color: {r: 0.21066865, g: 0.20088235, b: 0.19973773, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []

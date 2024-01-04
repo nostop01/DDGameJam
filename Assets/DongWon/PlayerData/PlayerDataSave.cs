@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class PlayerDataSave : MonoBehaviour
 {
-    public float PlayerBestScore;
-    public float PlayerScore;
-    public float SFXSetting;
-    public float BGMSetting;
+    public float PlayerBestScore = 0;
+    public float PlayerScore = 0;
 
     Score score;
     
@@ -28,25 +26,9 @@ public class PlayerDataSave : MonoBehaviour
             PlayerBestScore = PlayerScore;
         }
     }
-
-    public void DataSave()
-    {
-        PlayerPrefs.SetFloat("BestScore", PlayerBestScore);
-        PlayerPrefs.SetFloat("SFXSetting", SFXSetting);
-        PlayerPrefs.SetFloat("BGMSetting", BGMSetting);
-    }
     
     public void DataReset()
     {
         PlayerPrefs.DeleteAll();
     }
-
-    public void DataLoad()
-    {
-        PlayerBestScore = PlayerPrefs.GetFloat("BestScore");
-        SFXSetting = PlayerPrefs.GetFloat("SFXSetting");
-        BGMSetting = PlayerPrefs.GetFloat("BGMSetting");
-    }
-
-
 }

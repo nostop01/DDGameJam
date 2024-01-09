@@ -10,6 +10,8 @@ TagManager:
   - Energy
   - Chark
   - Point
+  - Enemy
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -21,7 +23,7 @@ TagManager:
   - CommonEnemy
   - RedEnemy
   - BlueEnemy
-  - 
+  - Bullet
   - 
   - 
   - 

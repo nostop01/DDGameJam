@@ -24,14 +24,17 @@ public class WaveSystem : MonoBehaviour
 
     private void Update()
     {
-        WaveTimer += Time.deltaTime;
-
-        if (WaveTimer >= 7f)
+        if (!PlayerMovement.PauseGame)
         {
-            WaveTimer = 0f;
-            WaveCount();
-            SetEnemySpawnCount();
-            CanSpawn();
+            WaveTimer += Time.deltaTime;
+
+            if (WaveTimer >= 6f)
+            {
+                WaveTimer = 0f;
+                WaveCount();
+                SetEnemySpawnCount();
+                CanSpawn();
+            }
         }
     }
 

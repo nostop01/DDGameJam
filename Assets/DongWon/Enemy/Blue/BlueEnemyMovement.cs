@@ -21,15 +21,18 @@ public class BlueEnemyMovement : MonoBehaviour
 
     private void Update()
     {
-        targetPos = Target.transform.position;
-
-        ChaseTarget();
-
-        Timer += Time.deltaTime;
-
-        if (Timer > 0.2f)
+        if(!PlayerMovement.PauseGame)
         {
-            HitPlayer = false;
+            targetPos = Target.transform.position;
+
+            ChaseTarget();
+
+            Timer += Time.deltaTime;
+
+            if (Timer > 0.2f)
+            {
+                HitPlayer = false;
+            }
         }
     }
 

@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EnergyStatus : MonoBehaviour
 {
     public static float EnergyHealth = 100f;
     public float GetDamage;
+
+    public AudioSource audioSource;
+    public AudioClip clip;
 
     private int Count;
 
@@ -21,6 +25,7 @@ public class EnergyStatus : MonoBehaviour
         Count = 0;
         Cam = Camera.main;
         CameraOriginalPos = Cam.transform.position;
+        audioSource.clip = clip;
     }
 
     private void Update()
@@ -34,8 +39,8 @@ public class EnergyStatus : MonoBehaviour
     private void CountIncrease()
     {
         Debug.Log("GetDamage :" + GetDamage);
-        PlayerMovement.DefaultSpeed += GetDamage * 0.5f;
-        PlayerMovement.MaxAcceleration += GetDamage * 0.5f;
+        PlayerMovement.DefaultSpeed += GetDamage * 0.3f;
+        PlayerMovement.MaxAcceleration += GetDamage * 0.4f;
 
         Debug.Log("DefaultSpeed :" + PlayerMovement.DefaultSpeed);
     }
@@ -43,6 +48,7 @@ public class EnergyStatus : MonoBehaviour
     public void HealthZero()
     {
         Destroy(gameObject);
+        SceneManager.LoadScene("ResultScene");
     }
 
     public IEnumerator CamShake(float duration, float magnitude)
@@ -60,20 +66,30 @@ public class EnergyStatus : MonoBehaviour
         Cam.transform.localPosition = CameraOriginalPos;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("CommonEnemy"))
         {
             GetDamage = CommonEnemyStatus.CommonEnemyAttack;
             CountIncrease();
-            StartCoroutine(CamShake(0.5f, 2.0f));
+            StartCoroutine(CamShake(0.3f, 0.75f));
+            audioSource.Play();
         }
 
         if (collision.gameObject.CompareTag("RedEnemy"))
         {
             GetDamage = RedEnemyStatus.RedEnemyAttack;
             CountIncrease();
-            StartCoroutine(CamShake(0.5f, 2.5f));
+            StartCoroutine(CamShake(0.3f, 0.75f));
+            audioSource.Play();
+        }
+
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            GetDamage = 2;
+            CountIncrease();
+            StartCoroutine(CamShake(0.3f, 0.5f));
+            audioSource.Play();
         }
     }
 }

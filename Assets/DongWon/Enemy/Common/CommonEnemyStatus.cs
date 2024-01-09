@@ -5,8 +5,8 @@ using UnityEngine.Pool;
 
 public class CommonEnemyStatus : PoolAble
 {
-    public float CommonEnemyHealth = 40f;
-    public static float CommonEnemyAttack = 5f;
+    public float CommonEnemyHealth = 30f;
+    public static float CommonEnemyAttack = 3f;
 
     public float Timer = 0;
 
@@ -47,7 +47,7 @@ public class CommonEnemyStatus : PoolAble
         EnergyStatus.EnergyHealth = EnergyStatus.EnergyHealth - CommonEnemyAttack;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Energy"))
         {

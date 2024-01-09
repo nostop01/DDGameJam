@@ -6,7 +6,8 @@ public class TrailParticleEffect : MonoBehaviour
 {
     public ParticleSystem TrailParticleSystem;
 
-    public float Timer = 0;
+    public float TrailSpeed;
+    public float RateTime;
 
     // Start is called before the first frame update
     void Start()
@@ -17,12 +18,8 @@ public class TrailParticleEffect : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Timer += 0.001f;
-
-        if(Timer >= 2f) 
-        {
-            Timer = 2f;
-        }
+        TrailSpeed = PlayerMovement.MoveSpeed / 110f;
+        RateTime = PlayerMovement.MoveSpeed * 3.5f;
 
         TrailParticle();
     }
@@ -30,8 +27,10 @@ public class TrailParticleEffect : MonoBehaviour
     private void TrailParticle()
     {
         ParticleSystem.MainModule mainModule = TrailParticleSystem.main;
+        ParticleSystem.EmissionModule emssionModule = TrailParticleSystem.emission;
 
         // StartLifetime 값을 수정합니다.
-        mainModule.startLifetime = Timer;
+        mainModule.startLifetime = TrailSpeed;
+        emssionModule.rateOverTime = RateTime;
     }
 }

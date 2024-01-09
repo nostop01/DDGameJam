@@ -5,7 +5,7 @@ using UnityEngine.Pool;
 
 public class BlueEnemyStatus : PoolAble
 {
-    public float BlueEnemyHealth = 50f;
+    public float BlueEnemyHealth = 40f;
     public static float BlueEnemyAttack = 0f;
 
     public float Timer = 0;

@@ -6,12 +6,15 @@ public class RedEnemyNuckBack : MonoBehaviour
 {
     public float PlayerSpeed = 0;
 
+    public AudioSource audioSource;
+    public AudioClip clip;
 
     Rigidbody2D rigid;
 
     private void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
+        audioSource.clip = clip;
     }
 
     private void Update()
@@ -32,9 +35,10 @@ public class RedEnemyNuckBack : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.name == "Player")
+        if (collision.gameObject.CompareTag("Player"))
         {
             NuckBack(collision.transform);
+            audioSource.Play();
         }
     }
 }

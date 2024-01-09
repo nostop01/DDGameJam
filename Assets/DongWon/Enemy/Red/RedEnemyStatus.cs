@@ -6,8 +6,8 @@ using UnityEngine.Pool;
 
 public class RedEnemyStatus : PoolAble
 {
-    public float RedEnemyHealth = 30f;
-    public static float RedEnemyAttack = 7f;
+    public float RedEnemyHealth = 20f;
+    public static float RedEnemyAttack = 5f;
 
     public float Timer = 0;
 
@@ -48,9 +48,9 @@ public class RedEnemyStatus : PoolAble
         ReleaseObject();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Energy"))
+        if (collision.gameObject.CompareTag("Energy"))
         {
             SuccessAttack();
         }

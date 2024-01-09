@@ -8,9 +8,13 @@ public class CommonEnemyNuckBack : MonoBehaviour
 
     Rigidbody2D rigid;
 
+    public AudioSource audioSource;
+    public AudioClip clip;
+
     private void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
+        audioSource.clip = clip;
     }
 
     private void Update()
@@ -30,9 +34,10 @@ public class CommonEnemyNuckBack : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.name == "Player")
+        if(collision.gameObject.CompareTag("Player"))
         {
             NuckBack(collision.transform);
+            audioSource.Play();
         }
     }
 }

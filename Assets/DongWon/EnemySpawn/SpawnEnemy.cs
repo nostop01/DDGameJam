@@ -30,24 +30,27 @@ public class SpawnEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(PastWaveCount != WaveSystem.WaveCounter)
+        if(!PlayerMovement.PauseGame)
         {
-            for(float i = 0; i < WaveSystem.CommonEnemyCount; i++)
+            if (PastWaveCount != WaveSystem.WaveCounter)
             {
-                SpawnCommonEnemy();
-            }
-            
-            for (float i = 0; i < WaveSystem.RedEnemyCount; i++)
-            {
-                SpawnRedEnemy();
-            }
+                for (float i = 0; i < WaveSystem.CommonEnemyCount; i++)
+                {
+                    SpawnCommonEnemy();
+                }
 
-            for (float i = 0; i < WaveSystem.BlueEnemyCount; i++)
-            {
-                SpawnBlueEnemy();
+                for (float i = 0; i < WaveSystem.RedEnemyCount; i++)
+                {
+                    SpawnRedEnemy();
+                }
+
+                for (float i = 0; i < WaveSystem.BlueEnemyCount; i++)
+                {
+                    SpawnBlueEnemy();
+                }
+
+                PastWaveCount = WaveSystem.WaveCounter;
             }
-            
-            PastWaveCount = WaveSystem.WaveCounter;
         }
     }
 

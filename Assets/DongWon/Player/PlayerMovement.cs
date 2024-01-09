@@ -8,33 +8,95 @@ public class PlayerMovement : MonoBehaviour
     public static float MaxAcceleration = 30f; //최대 가속도
     public static float DefaultSpeed = 50f; //기본속도
     public static float Acceleration; //가속도
+
+    public static bool PauseGame = false;
+
+    public float reamemberAccel; //순간가속 전 가속도 기억
+    public float currentEnemyHealth;
     public float AccelingTimer = 0f; //순간가속 타이머
 
+    public AudioSource audioSource;
+    public AudioClip clip;
+
     public bool Acceling = false; //가속중인가?
+
+    public GameObject PausePanel;
 
     Camera Cam;
     Rigidbody2D rigid2D;
     Vector2 lastInputDirection;
     Vector3 CameraOriginalPos;
+   [SerializeField] private Vector3 LastPos;
 
     private void Start()
     {
+        PauseGame = false;
+        MaxAcceleration = 30f;
+        DefaultSpeed = 50f;
         rigid2D = GetComponent<Rigidbody2D>();
         DefaultSpeed = 50f;
         Cam = Camera.main;
         CameraOriginalPos = Cam.transform.position;
+        audioSource.clip = clip;
     }
 
     private void Update()
     {
-        SetMoveSpeed();
-        PlayerMove();
-        InstantaneousAccel();
-        ClampPlayerPosition();
+        Pause();
 
-        if (Acceling)
+        if (!PauseGame)
         {
-            AccelingTimer += Time.deltaTime;
+            SetMoveSpeed();
+            PlayerMove();
+
+            if (Acceleration >= 10)
+            {
+                InstantaneousAccel();
+            }
+
+            ClampPlayerPosition();
+
+            if (Acceling)
+            {
+                AccelingTimer += Time.deltaTime;
+            }
+
+            if (Acceleration <= 0)
+            {
+                Acceleration = 0;
+            }
+        }   
+
+        RememberLastPos();
+    }
+
+    private void RememberLastPos()
+    {
+       
+        if(PauseGame)
+        {
+            rigid2D.position = LastPos;
+        }
+
+        else if(!PauseGame)
+        {
+            LastPos = transform.position;
+        }
+    }
+
+    private void Pause()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape) && !PauseGame)
+        {
+            PauseGame = true;
+            PausePanel.SetActive(true);
+        }
+
+        else if (Input.GetKeyDown(KeyCode.Escape) && PauseGame)
+        {
+            PauseGame = false;
+            PausePanel.SetActive(false);
+
         }
     }
 
@@ -49,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
 
         else if(Acceleration <= MaxAcceleration && !Acceling)
         {
-            Acceleration += 0.025f;
+            Acceleration += 0.1f;
         }
 
     }
@@ -70,15 +132,16 @@ public class PlayerMovement : MonoBehaviour
             // 플레이어가 자동으로 이동하도록 Rigidbody2D의 velocity를 설정
             rigid2D.velocity = lastInputDirection * MoveSpeed;
         }
-
     }
 
     private void InstantaneousAccel() //순간 가속
     {
-        if (Input.GetKeyDown(KeyCode.LeftShift) && AccelingTimer == 0)
+        if (Input.GetMouseButtonDown(0) && AccelingTimer == 0)
         {
             Acceling = true;
+            reamemberAccel = Acceleration;
             Acceleration *= 5;
+            audioSource.Play();
         }
 
         rigid2D.velocity = lastInputDirection * MoveSpeed;
@@ -88,8 +151,8 @@ public class PlayerMovement : MonoBehaviour
             Acceling = false;
             AccelingTimer = 0;
 
-            Acceleration = MaxAcceleration;
-            Acceleration -= MaxAcceleration / 3;
+            Acceleration = reamemberAccel;
+            Acceleration -= 10;
         }
     }
 
@@ -120,70 +183,69 @@ public class PlayerMovement : MonoBehaviour
         Cam.transform.localPosition = CameraOriginalPos;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Point"))
-        {
-            DefaultSpeed += 0.5f;
-        }
-
-        if(collision.gameObject.CompareTag("CommonEnemy"))
+        if (collision.gameObject.CompareTag("CommonEnemy"))
         {
             CommonEnemyStatus CommonEnemyStatus = collision.gameObject.GetComponent<CommonEnemyStatus>();
 
-            CommonEnemyStatus.TakeDamage(Acceleration);
-
-            if(CommonEnemyStatus.CommonEnemyHealth >= Acceleration)
+            if (CommonEnemyStatus.CommonEnemyHealth >= Acceleration)
             {
-                Acceleration = Acceleration / 2;
+                CommonEnemyStatus.TakeDamage(Acceleration);
+
+                Acceleration = Acceleration / 1.5f;
             }
 
-            if(CommonEnemyStatus.CommonEnemyHealth < Acceleration)
+            else if (Acceleration > CommonEnemyStatus.CommonEnemyHealth)
             {
-                Acceleration = CommonEnemyStatus.CommonEnemyHealth - Acceleration;
+                CommonEnemyStatus.TakeDamage(Acceleration);
+
+                Acceleration = Acceleration / 1.25f;
             }
 
-            StartCoroutine(CamShake(0.5f, 1.25f));
+            StartCoroutine(CamShake(0.3f, 0.75f));
         }
 
         if (collision.gameObject.CompareTag("RedEnemy"))
         {
             RedEnemyStatus RedEnemyStatus = collision.gameObject.GetComponent<RedEnemyStatus>();
 
-            RedEnemyStatus.TakeDamage(Acceleration);
-
             if (RedEnemyStatus.RedEnemyHealth >= Acceleration)
             {
-                Acceleration = Acceleration / 2;
+                RedEnemyStatus.TakeDamage(Acceleration);
+
+                Acceleration = Acceleration / 1.5f;
             }
 
-            if (RedEnemyStatus.RedEnemyHealth < Acceleration)
+            else if (RedEnemyStatus.RedEnemyHealth < Acceleration)
             {
-                Acceleration = RedEnemyStatus.RedEnemyHealth - Acceleration;
+                RedEnemyStatus.TakeDamage(Acceleration);
+
+                Acceleration = Acceleration / 1.25f;
             }
 
-            StartCoroutine(CamShake(0.5f, 1.5f));
-
+            StartCoroutine(CamShake(0.3f, 0.75f));
         }
 
         if (collision.gameObject.CompareTag("BlueEnemy"))
         {
             BlueEnemyStatus BlueEnemyStatus = collision.gameObject.GetComponent<BlueEnemyStatus>();
 
-            BlueEnemyStatus.TakeDamage(Acceleration);
-
             if (BlueEnemyStatus.BlueEnemyHealth >= Acceleration)
             {
-                Acceleration = Acceleration / 2;
+                BlueEnemyStatus.TakeDamage(Acceleration);
+
+                Acceleration = Acceleration / 1.5f;
             }
 
-            if (BlueEnemyStatus.BlueEnemyHealth < Acceleration)
+            else if (BlueEnemyStatus.BlueEnemyHealth < Acceleration)
             {
-                Acceleration = BlueEnemyStatus.BlueEnemyHealth - Acceleration;
+                BlueEnemyStatus.TakeDamage(Acceleration);
+
+                Acceleration = Acceleration / 1.25f;
             }
 
-            StartCoroutine(CamShake(0.5f, 1.25f));
-
+            StartCoroutine(CamShake(0.3f, 0.5f));
         }
     }
 }

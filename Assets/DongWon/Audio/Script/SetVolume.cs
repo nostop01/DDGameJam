@@ -18,21 +18,52 @@ public class SetVolume : MonoBehaviour
         sfxSoundslider.value = PlayerPrefs.GetFloat("SFXSetting");
     }
 
-    public void SetMasterVolume(float sliderValue)
+    public void MasterAudioControl()
     {
-        audioMixer.SetFloat("AllSound", Mathf.Log10(sliderValue) * 20);
-        PlayerPrefs.SetFloat("AllSound", sliderValue);
+        float sound = allSoundslider.value;
+
+        if(sound == - 40f)
+        {
+            audioMixer.SetFloat("MasterSound", -80f);
+        }
+        else
+        {
+            audioMixer.SetFloat("MasterSound", sound);
+        }
     }
 
-    public void SetBGMVolume(float sliderValue)
+    public void BGMAudioControl()
     {
-        audioMixer.SetFloat("BGMSound", Mathf.Log10(sliderValue) * 20);
-        PlayerPrefs.SetFloat("BGMSound", sliderValue);
+        float sound = bgmSoundslider.value;
+
+        if (sound == -40f)
+        {
+            audioMixer.SetFloat("BGMSound", -80f);
+        }
+        else
+        {
+            audioMixer.SetFloat("BGMSound", sound);
+        }
     }
 
-    public void SetSFXVolume(float sliderValue)
+    public void SFXAudioControl()
     {
-        audioMixer.SetFloat("SFXSound", Mathf.Log10(sliderValue) * 20);
-        PlayerPrefs.SetFloat("SFXSound", sliderValue);
+        float sound = sfxSoundslider.value;
+
+        if (sound == -40f)
+        {
+            audioMixer.SetFloat("SFXSound", -80f);
+        }
+        else
+        {
+            audioMixer.SetFloat("SFXSound", sound);
+        }
+    }
+
+    public void SetVolumeSetting()
+    {
+        PlayerPrefs.SetFloat("AllSound", allSoundslider.value);
+        PlayerPrefs.SetFloat("BGMSetting", bgmSoundslider.value);
+        PlayerPrefs.SetFloat("SFXSetting", sfxSoundslider.value);
     }
 }
